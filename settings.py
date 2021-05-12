@@ -16,7 +16,7 @@ class settings():
         self.ship_limit = 3
 
         #bullet settings
-        self.bullet_speed = 3
+        self.speed_factor = 3
         self.bullet_width = 1
         self.bullet_height = 20
         self.bullet_color = (230,0,0)
@@ -34,3 +34,23 @@ class settings():
         self.list = [1, -1]
 
         self.fleet_direction = random.choice(self.list)
+
+        self.speedup_scale = 1.5
+        
+        self.initialize_dynamic_settings()
+    
+    def initialize_dynamic_settings(self):
+        self.speed_factor = 1.5
+        self.bullet_speed = 3
+        self.alien_speed = 1
+        
+        self.fleet_direction = 1
+
+        
+
+        
+    def increase_speed(self):
+
+        self.speed_factor *= self.speedup_scale
+        self.bullet_speed *= self.speedup_scale
+        self.alien_speed *= self.speedup_scale

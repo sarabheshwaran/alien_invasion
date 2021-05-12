@@ -40,7 +40,14 @@ def create_fleet(ai_settings, screen, ship, aliens):
 
 def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
-    if button_clicked and not stats.game_active:
+    if button_clicked:
+        start_game(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+        
+def start_game(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
+    if not stats.game_active:
+        ai_settings.initialize_dynamic_settings()
+
+        pygame.mouse.set_visible(False)
         stats.reset_stats()
         stats.game_active = True       
 
@@ -62,10 +69,15 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
             
         elif event.type == pygame.KEYUP:
             key_check.check_keyup (event,ship)
-
+        
+        elif event.type == pygame.K_p:
+            start_game(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+        
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x,mouse_y = pygame.mouse.get_pos()
             check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+
+        
         
 def check_bullet_alien_collision(ai_settings, screen, ship, aliens, bullets):
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
@@ -81,6 +93,7 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
 
     if len(aliens) == 0:
         bullets.empty()
+        ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
 
 def update_screen(ai_settings, screen, stats, ship , aliens ,bullets, play_button):
@@ -126,6 +139,7 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
 
         sleep(0.5)
     else:
+        pygame.mouse.set_visible(True)
         stats.game_active = False
 
 def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
