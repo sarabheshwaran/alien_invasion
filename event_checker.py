@@ -71,12 +71,13 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bull
             
         elif event.type == pygame.KEYDOWN:
             key_check.check_keydown(event, ai_settings, screen, ship, bullets)
-            
+            if event.type == pygame.K_p:
+                start_game(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y)        
+        
         elif event.type == pygame.KEYUP:
             key_check.check_keyup (event,ship)
         
-        elif event.type == pygame.K_p:
-            start_game(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+
         
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x,mouse_y = pygame.mouse.get_pos()

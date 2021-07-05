@@ -22,6 +22,7 @@ class key_check :
             Bullet.fire_bullet(ai_settings,screen,ship,bullets)
         elif event.key == pygame.K_q:
             sys.exit()
+    
     def check_keyup (event,ship):
         
         if event.key == pygame.K_RIGHT:
